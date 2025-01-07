@@ -1,0 +1,24 @@
+services:
+  backend:
+    image: node:18
+    working_dir: /usr/src/app
+    ports:
+      - "8060:8060"
+    environment:
+      - MONGO_URI=mongodb://mongo:27017/fantrade
+    depends_on:
+      - mongo
+    volumes:
+      - ./BackEnd:/usr/src/app
+    command: >
+      sh -c "npm install && npm start"
+
+  mongo:
+    image: mongo:5.0
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+volumes:
+  mongo-data:
